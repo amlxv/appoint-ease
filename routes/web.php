@@ -42,6 +42,10 @@ Route::get('/doctors/create',
     "App\Http\Controllers\DoctorController@create")
     ->name('doctors.create');
 
+Route::post('/doctors/store',
+    "App\Http\Controllers\DoctorController@store")
+    ->name('doctors.store');
+
 Route::get('/doctors/{id}/edit',
     "App\Http\Controllers\DoctorController@edit")
     ->name('doctors.edit');
