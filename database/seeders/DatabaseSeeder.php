@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Patient;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Doctor;
@@ -24,6 +25,10 @@ class DatabaseSeeder extends Seeder
         User::factory(100)->create()->each(function ($user) {
             if ($user->role == 'doctor') {
                 $user->doctor()->update(Doctor::factory()->make()->toArray());
+            }
+
+            if ($user->role == 'patient') {
+                $user->patient()->update(Patient::factory()->make()->toArray());
             }
         });
 
