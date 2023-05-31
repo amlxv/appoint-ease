@@ -51,7 +51,7 @@
                             </a>
 
                             @isAdmin
-                            <a href="{{ route('doctor') }}"
+                            <a href="{{ route('doctors') }}"
                                class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
                                 <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -63,7 +63,7 @@
                                 Doctors
                             </a>
 
-                            <a href="#"
+                            <a href="{{ route('patients') }}"
                                class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
                                 <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -118,8 +118,8 @@
                         </a>
 
                         @isAdmin
-                        <a href="{{ route('doctor') }}"
-                           class="{{ request()->is('doctor') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <a href="{{ route('doctors') }}"
+                           class="{{ request()->is('doctors') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <svg class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" aria-hidden="true">
@@ -129,8 +129,8 @@
                             Doctors
                         </a>
 
-                        <a href="#"
-                           class="{{ request()->is('patient') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <a href="{{ route('patients') }}"
+                           class="{{ request()->is('patients') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <svg class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" aria-hidden="true">

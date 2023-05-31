@@ -34,6 +34,31 @@ Route::get('/', fn() => Auth::check()
  * Admin Page
  *  - doctor
  */
-Route::get('/doctor', "App\Http\Controllers\DoctorController@index")
-    ->name('doctor')
-    ->middleware('auth');
+Route::get('/doctors',
+    "App\Http\Controllers\DoctorController@index")
+    ->name('doctors');
+
+Route::get('/doctors/create',
+    "App\Http\Controllers\DoctorController@create")
+    ->name('doctors.create');
+
+Route::get('/doctors/{id}/edit',
+    "App\Http\Controllers\DoctorController@edit")
+    ->name('doctors.edit');
+
+
+/**
+ * Admin Page
+ * - patient
+ */
+Route::get('/patients',
+    "App\Http\Controllers\PatientController@index")
+    ->name('patients');
+
+Route::get('/patients/create',
+    "App\Http\Controllers\PatientController@create")
+    ->name('patients.create');
+
+Route::get('/patients/{id}/edit',
+    "App\Http\Controllers\PatientController@edit")
+    ->name('patients.edit');
