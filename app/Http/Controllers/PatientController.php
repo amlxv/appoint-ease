@@ -25,7 +25,7 @@ class PatientController extends Controller
             abort(403);
         }
 
-        $users = User::query()->where('role', 'patient')->simplePaginate(10);
+        $users = User::query()->where('role', 'patient')->latest()->simplePaginate(10);
         $data = [
             'id' => 'patient.id',
             'users' => $users,
