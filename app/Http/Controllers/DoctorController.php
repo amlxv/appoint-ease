@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+
+    /**
+     * Prevent unauthorized access to this controller methods
+     *
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -16,8 +26,23 @@ class DoctorController extends Controller
             abort(403);
         }
 
-        $users = User::query()->where('role', 'DOCTOR')->simplePaginate(10);
-        return view('admin.doctor.index', ['users' => $users]);
+        $users = User::query()->where('role', 'doctor')->simplePaginate(10);
+        $data = [
+            'id' => 'doctor.id',
+            'users' => $users,
+            'route' => 'doctors',
+            'columns' => [
+                'Name' => '',
+                'Specialization' => 'doctor.specialization',
+                'Qualification' => 'doctor.qualification',
+                'Experience' => 'doctor.experience',
+                'Phone Number' => 'phone_number',
+                'Status' => 'doctor.status',
+                'Action' => '',
+            ],
+        ];
+
+        return view('admin.doctor.index', ['tableData' => $data]);
     }
 
     /**

@@ -80,6 +80,7 @@ class DoctorFactory extends Factory
             ]),
             'qualification' => fake()->randomElement(['MBBS', 'MD', 'MS', 'DM', 'MCh', 'DNB', 'BDS', 'MDS']),
             'experience' => fake()->numberBetween(1, 50),
+            'status' => fake()->randomElement(['active', 'inactive'])
         ];
 
     }
