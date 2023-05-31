@@ -24,5 +24,9 @@ export default {
             pattern:
                 /(bg|text|ring|ring-offset)-(green|red|yellow|blue)-(50|100|500|600|800|)/,
         },
+        {
+            pattern:
+                /col-span-3/,
+        }
     ],
 };
