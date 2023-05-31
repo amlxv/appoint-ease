@@ -20,10 +20,18 @@
                         <tr>
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                 <div class="flex items-center">
-                                    <div class="h-10 w-10 flex-shrink-0">
-                                        <img class="h-10 w-10 rounded-full"
-                                             src="https://source.unsplash.com/random/?person{{ $user->name }}&w=256&h=256&q=80"
-                                             alt="">
+                                    <div class="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full">
+                                        @if($user->profile_photo_path)
+                                            <img class="h-10 w-10 rounded-full"
+                                                 src="{{ asset('storage/'.$user->profile_photo_path) }}"
+                                                 alt="{{ $user->name }}">
+                                        @else
+                                            <svg class="h-full w-full text-gray-300" fill="currentColor"
+                                                 viewBox="0 0 24 24">
+                                                <path
+                                                    d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                            </svg>
+                                        @endif
                                     </div>
                                     <div class="ml-4">
                                         <div class="font-medium text-gray-900">{{ $user->name }}</div>
