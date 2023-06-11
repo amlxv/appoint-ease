@@ -1,19 +1,20 @@
 <?php
 
-namespace App\View\Components\Inputs;
+namespace App\View\Components\Doctors;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class UserAddInput extends Component
+class UserForm extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $key,
-        public array  $item,
+        public string $action,
+        public ?Model $formData = null,
     )
     {
         //
@@ -24,6 +25,6 @@ class UserAddInput extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.inputs.user-add-input');
+        return view('components.doctors.user-form');
     }
 }

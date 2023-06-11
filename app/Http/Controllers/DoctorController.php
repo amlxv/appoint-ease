@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
-
     /**
      * Prevent unauthorized access to this controller methods
      *
@@ -29,22 +28,8 @@ class DoctorController extends Controller
         }
 
         $users = User::query()->where('role', 'doctor')->latest()->simplePaginate(10);
-        $data = [
-            'id' => 'doctor.id',
-            'users' => $users,
-            'route' => 'doctors',
-            'columns' => [
-                'Name' => '',
-                'Specialization' => 'doctor.specialization',
-                'Qualification' => 'doctor.qualification',
-                'Experience' => 'doctor.experience',
-                'Phone Number' => 'phone_number',
-                'Status' => 'doctor.status',
-                'Action' => '',
-            ],
-        ];
 
-        return view('admin.doctor.index', ['tableData' => $data]);
+        return view('admin.doctor.index', ['users' => $users]);
     }
 
     /**
@@ -52,58 +37,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $items = [
-            'name' => [
-                'label' => 'Name',
-                'type' => 'text',
-                'colspan' => '6'
-            ],
-            'email' => [
-                'label' => 'Email',
-                'type' => 'email',
-                'colspan' => '6'
-            ],
-            'password' => [
-                'label' => 'Password',
-                'type' => 'password',
-                'colspan' => '3'
-            ],
-            'password_confirmation' => [
-                'label' => 'Confirm Password',
-                'type' => 'password',
-                'colspan' => '3'
-            ],
-            'phone_number' => [
-                'label' => 'Phone Number',
-                'type' => 'text',
-                'colspan' => '6'
-            ],
-            'address' => [
-                'label' => 'Address',
-                'type' => 'text',
-                'colspan' => '6'
-            ],
-        ];
-
-        $additionalItems = [
-            'specialization' => [
-                'label' => 'Specialization',
-                'type' => 'text',
-                'colspan' => '3'
-            ],
-            'qualification' => [
-                'label' => 'Qualification',
-                'type' => 'text',
-                'colspan' => '3'
-            ],
-            'experience' => [
-                'label' => 'Experience',
-                'type' => 'number',
-                'colspan' => '3'
-            ],
-        ];
-
-        return view('admin.doctor.create', ['items' => $items, 'additionalItems' => $additionalItems]);
+        return view('admin.doctor.create');
     }
 
     /**
@@ -111,9 +45,6 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * Validate the request
-         */
         $request->validate([
             'name' => 'required|string|max:255|min:3',
             'email' => 'required|email|unique:users',
@@ -123,32 +54,31 @@ class DoctorController extends Controller
             'specialization' => 'required|string',
             'qualification' => 'required|string',
             'experience' => 'required|numeric',
+            'status' => 'required|in:active,inactive',
         ]);
 
-
         $result = User::query()->create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone_number' => $request->phone_number,
-            'address' => $request->address,
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'phone_number' => $request->get('phone_number'),
+            'address' => $request->get('address'),
             'role' => 'doctor',
         ]);
 
-        if (!$result) abort(500, 'Something went wrong when creating user.');
-
+        if (!$result) return redirect()->route('doctors.index')->with('error', 'Something went wrong when creating user.');
 
         $result = Doctor::query()->where('user_id', $result->id)->update(
             [
-                'specialization' => $request->specialization,
-                'qualification' => $request->qualification,
-                'experience' => $request->experience,
+                'specialization' => $request->get('specialization'),
+                'qualification' => $request->get('qualification'),
+                'experience' => $request->get('experience'),
             ]
         );
 
-        if (!$result) abort(500, 'Something went wrong when creating doctor.');
+        if (!$result) return redirect()->route('doctors.index')->with('error', 'Something went wrong when creating user.');
 
-        return redirect()->route('doctors')->with('success', 'Doctor created successfully.');
+        return redirect()->route('doctors.index')->with('success', 'Doctor created successfully.');
     }
 
     /**
@@ -162,24 +92,78 @@ class DoctorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Doctor $doctor)
     {
-        //
+        return view('admin.doctor.edit', ['doctor' => $doctor]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Doctor $doctor)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|min:3',
+            'email' => 'required|email',
+            'password' => 'nullable|string|min:8|confirmed',
+            'phone_number' => 'required|string',
+            'address' => 'required|string|max:255|min:3',
+            'specialization' => 'required|string',
+            'qualification' => 'required|string',
+            'experience' => 'required|numeric',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $data = [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'phone_number' => $request->get('phone_number'),
+            'address' => $request->get('address'),
+        ];
+
+        if ($request->get('password')) {
+            $data['password'] = Hash::make($request->get('password'));
+        }
+
+        $result = $doctor->user()->update($data);
+
+        if (!$result) return redirect()->route('doctors.index')->with([
+            'status' => 'error',
+            'message' => 'Something went wrong when updating user.',
+        ]);
+
+        $result = $doctor->update(
+            [
+                'specialization' => $request->get('specialization'),
+                'qualification' => $request->get('qualification'),
+                'experience' => $request->get('experience'),
+                'status' => $request->get('status'),
+            ]
+        );
+
+        if (!$result) return redirect()->route('doctors.index')->with([
+            'status' => 'error',
+            'message' => 'Something went wrong when updating doctor.',
+        ]);
+
+        return redirect()->route('doctors.index')->with([
+            'status' => 'success',
+            'message' => 'Doctor updated successfully.',
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param Doctor $doctor
      */
-    public function destroy(string $id)
+    public function destroy(Doctor $doctor)
     {
-        //
+        if (!$doctor->user()->delete())
+            return redirect()->route('doctors.index')
+                ->with(['status' => 'error', 'message' => 'Something went wrong when deleting user.']);
+
+        return redirect()->route('doctors.index')
+            ->with(['status' => 'success', 'message' => 'Doctor deleted successfully.']);
     }
 }

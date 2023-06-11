@@ -11,6 +11,11 @@
             </a>
         </div>
     </div>
+
+    @if(session()->has('status'))
+        <x-alert custom-class="mt-6" :type="session('status')" :message="session('message')"/>
+    @endif
+
     <div class="mt-8 ">
         {{ $slot }}
     </div>

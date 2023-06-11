@@ -34,22 +34,22 @@ Route::get('/', fn() => Auth::check()
  * Admin Page
  *  - doctor
  */
-Route::get('/doctors',
-    "App\Http\Controllers\DoctorController@index")
-    ->name('doctors');
-
-Route::get('/doctors/create',
-    "App\Http\Controllers\DoctorController@create")
-    ->name('doctors.create');
-
-Route::post('/doctors/store',
-    "App\Http\Controllers\DoctorController@store")
-    ->name('doctors.store');
-
-Route::get('/doctors/{id}/edit',
-    "App\Http\Controllers\DoctorController@edit")
-    ->name('doctors.edit');
-
+//Route::get('/doctors',
+//    "App\Http\Controllers\DoctorController@index")
+//    ->name('doctors');
+//
+//Route::get('/doctors/create',
+//    "App\Http\Controllers\DoctorController@create")
+//    ->name('doctors.create');
+//
+//Route::post('/doctors/store',
+//    "App\Http\Controllers\DoctorController@store")
+//    ->name('doctors.store');
+//
+//Route::get('/doctors/{id}/edit',
+//    "App\Http\Controllers\DoctorController@edit")
+//    ->name('doctors.edit');
+Route::resource('doctors', DoctorController::class);
 
 /**
  * Admin Page

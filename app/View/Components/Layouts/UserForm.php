@@ -4,21 +4,23 @@ namespace App\View\Components\Layouts;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
-class UserTableLayout extends Component
+class UserForm extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $title,
-        public string $description,
-        public string $addButtonText,
-        public string $route,
+        public string $for,
+        public string $action,
+        public ?Model $formData = null,
+        public string $id = '',
     )
     {
-        //
+        $this->id = $this->for;
     }
 
     /**
@@ -26,6 +28,6 @@ class UserTableLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layouts.user-table-layout');
+        return view('components.layouts.user-form');
     }
 }

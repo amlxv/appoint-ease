@@ -51,7 +51,7 @@
                             </a>
 
                             @isAdmin
-                            <a href="{{ route('doctors') }}"
+                            <a href="{{ route('doctors.index') }}"
                                class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
                                 <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -118,7 +118,7 @@
                         </a>
 
                         @isAdmin
-                        <a href="{{ route('doctors') }}"
+                        <a href="{{ route('doctors.index') }}"
                            class="{{ request()->is('doctors') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                             <svg class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

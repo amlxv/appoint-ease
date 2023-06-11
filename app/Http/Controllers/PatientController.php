@@ -26,22 +26,8 @@ class PatientController extends Controller
         }
 
         $users = User::query()->where('role', 'patient')->latest()->simplePaginate(10);
-        $data = [
-            'id' => 'patient.id',
-            'users' => $users,
-            'route' => 'patients',
-            'columns' => [
-                'Name' => '',
-                'Phone Number' => 'phone_number',
-                'Blood Type' => 'patient.blood_type',
-                'Gender' => 'patient.gender',
-                'Medical Records' => 'patient.medical_records',
-                'Allergies' => 'patient.allergies',
-                'Action' => '',
-            ],
-        ];
 
-        return view('admin.patient.index', ['tableData' => $data]);
+        return view('admin.patient.index', ['users' => $users]);
     }
 
     /**

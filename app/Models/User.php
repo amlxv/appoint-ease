@@ -42,6 +42,8 @@ class User extends Authenticatable
          *
          * @param User $user
          * @return void
+         *
+         * @future Maybe just avoid users from changing role? Need to create new user to get a new role.
          */
         static::updated(function (User $user): void {
             if (!$user->isDoctor()) {
