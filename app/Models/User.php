@@ -36,28 +36,6 @@ class User extends Authenticatable
                 $user->patient()->create();
             }
         });
-
-        /**
-         * Create if not exist, delete if no longer.
-         *
-         * @param User $user
-         * @return void
-         *
-         * @future Maybe just avoid users from changing role? Need to create new user to get a new role.
-         */
-        static::updated(function (User $user): void {
-            if (!$user->isDoctor()) {
-                $user->doctor()->delete();
-            } elseif (!$user->doctor()->exists()) {
-                $user->doctor()->create();
-            }
-
-            if (!$user->isPatient()) {
-                $user->patient()->delete();
-            } elseif (!$user->patient()->exists()) {
-                $user->patient()->create();
-            }
-        });
     }
 
     /**
@@ -152,8 +130,19 @@ class User extends Authenticatable
         return $this->hasOne(Patient::class);
     }
 
+    /**
+     * Relationship for doctor
+     */
     public function doctor(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Doctor::class);
+    }
+
+    /**
+     * Check the users required data
+     */
+    public function hasRequiredData(): bool
+    {
+        return ($this->name && $this->email && $this->phone_number && $this->address);
     }
 }

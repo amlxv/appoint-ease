@@ -17,9 +17,21 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory()->create([
-            'name' => 'Amirul',
-            'email' => 'amirulfcso@gmail.com',
+            'name' => 'Test Admin',
+            'email' => 'admin@test.com',
             'role' => 'admin'
+        ]);
+
+        $doctor = User::factory()->create([
+            'name' => 'Test Doctor',
+            'email' => 'doctor@test.com',
+            'role' => 'doctor'
+        ])->doctor()->update(Doctor::factory()->make()->toArray());
+
+        User::factory()->create([
+            'name' => 'Test Patient',
+            'email' => 'patient@test.com',
+            'role' => 'patient'
         ]);
 
         User::factory(100)->create()->each(function ($user) {
@@ -31,6 +43,5 @@ class DatabaseSeeder extends Seeder
                 $user->patient()->update(Patient::factory()->make()->toArray());
             }
         });
-
     }
 }

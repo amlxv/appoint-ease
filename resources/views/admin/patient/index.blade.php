@@ -69,27 +69,27 @@
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="text-gray-500">
-                                            {{ $user->phone_number }}
+                                            {{ $user->phone_number ?? 'N/A'}}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="text-gray-500">
-                                            {{ $user->patient->blood_type }}
+                                            {{ $user->patient->blood_type ?? 'N/A' }}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="text-gray-500">
-                                            {{ $user->patient->gender }}
+                                            {{ ($user->patient->gender) ? $user->patient->gender : 'N/A' }}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="text-gray-500">
-                                            {{ $user->patient->medical_records }}
+                                            {{ ($user->patient->medical_records) ? $user->patient->medical_records : 'N/A'}}
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="text-gray-500">
-                                            {{ $user->patient->allergies }}
+                                            {{ ($user->patient->allergies) ? $user->patient->allergies : 'N/A' }}
                                         </div>
                                     </td>
                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6">

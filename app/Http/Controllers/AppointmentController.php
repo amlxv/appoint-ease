@@ -28,6 +28,13 @@ class AppointmentController extends Controller
             ]);
         }
 
+        if (!auth()->user()->hasRequiredData()) {
+            return redirect()->route('profile.index')->with([
+                'status' => 'error',
+                'message' => 'Your account is being limited. Please complete your profile to continue.'
+            ]);
+        }
+
         $appointments = Appointment::query()
             ->where('patient_id', auth()->user()->patient->id)
             ->orderBy('id', 'desc')

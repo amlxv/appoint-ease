@@ -31,4 +31,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'toyyibpay' => [
+        'secret_key' => env('TOYYIBPAY_SECRET_KEY'),
+        'category_code' => 'hp1rb2vp',
+        'bill_name' => 'AppointEase',
+        'bill_description' => 'A booking fee for AppointEase',
+        'bill_price_setting' => 1,
+        'bill_payor_info' => 1,
+        'bill_amount' => 5000,
+        'bill_payment_channel' => '0',
+        'bill_content_email' => 'Thank you for using our system for appointment!',
+    ],
+
 ];

@@ -232,7 +232,7 @@
                                 x-transition:leave-start="transform opacity-100 scale-100"
                                 x-transition:leave-end="transform opacity-0 scale-95" role="menu"
                                 aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <a href="#"
+                                <a href="{{ route('profile.index') }}"
                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                                    role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
 

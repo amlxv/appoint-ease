@@ -51,10 +51,10 @@ class PatientController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'phone_number' => 'required|string',
             'address' => 'required|string|max:255|min:3',
-            'medical_records' => 'required|string',
-            'allergies' => 'required|string',
-            'blood_type' => 'required|in:A,B,AB,O',
-            'gender' => 'required|in:male,female',
+            'medical_records' => 'nullable|string',
+            'allergies' => 'nullable|string',
+            'blood_type' => 'nullable|in:A,B,AB,O',
+            'gender' => 'nullable|in:male,female',
         ]);
 
         $result = User::query()->create([
@@ -118,10 +118,10 @@ class PatientController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'phone_number' => 'required|string',
             'address' => 'required|string|max:255|min:3',
-            'medical_records' => 'required|string',
-            'allergies' => 'required|string',
-            'blood_type' => 'required|in:A,B,AB,O',
-            'gender' => 'required|in:male,female',
+            'medical_records' => 'nullable|string',
+            'allergies' => 'nullable|string',
+            'blood_type' => 'nullable|in:A,B,AB,O',
+            'gender' => 'nullable|in:male,female',
         ]);
 
         $data = [

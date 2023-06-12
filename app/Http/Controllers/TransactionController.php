@@ -166,6 +166,13 @@ class TransactionController extends Controller
 
     public function index()
     {
+        if (!auth()->user()->hasRequiredData()) {
+            return redirect()->route('profile.index')->with([
+                'status' => 'error',
+                'message' => 'Your account is being limited. Please complete your profile to continue.'
+            ]);
+        }
+
         $transactions = Transaction::query()->where('patient_id', Auth::user()->patient->id)->simplePaginate(10);
         return view('patient.transactions.index', compact('transactions'));
     }

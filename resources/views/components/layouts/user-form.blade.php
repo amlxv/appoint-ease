@@ -19,19 +19,29 @@
                         Delete
                     </button>
                 </form>
+            @elseif(request()->is('profile'))
+                <a href="{{ route('dashboard') }}"
+                   class="inline-flex items-center justify-center rounded-md border bg-white border-1 border-red-500 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto transition-colors hover:text-white">
+                    Cancel
+                </a>
             @endif
         </div>
     </div>
+
+    @if(session()->has('status'))
+        <x-alert custom-class="mt-6" :type="session('status')" :message="session('message')"/>
+    @endif
+
     <div class="mt-8">
         <div class="bg-white rounded-xl p-6 shadow-2xl">
             <form method="POST"
-                  action="{{ (request()->is('*/create')) ? route(str($id)->plural().'.store') : route(str($id)->plural().'.update', data_get($formData, "id")) }}"
+                  action="@if(request()->is('*/create')) {{ route(str($id)->plural().'.store') }} @elseif(request()->is('*/edit')) {{ route(str($id)->plural().'.update', data_get($formData, "id")) }} @elseif(request()->is('profile')) {{ route('profile.update') }} @endif"
                   class="space-y-8 divide-y divide-gray-200">
                 <div class="space-y-8 divide-y divide-gray-200">
                     <div>
                         @csrf
 
-                        @if(request()->is('*/edit'))
+                        @if(request()->is('*/edit') || request()->is('profile'))
                             @method('PUT')
                         @endif
 
@@ -100,12 +110,12 @@
                                     <input type="password" name="password" id="password"
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 @enderror"
                                     >
-                                    @if(request()->is('*/edit'))
+                                    @if(request()->is('*/edit') || request()->is('profile'))
                                         <p class="mt-2 text-xs text-gray-600">
                                             Leave blank if you don't want to change the password.
                                         </p>
                                     @endif
-                                    
+
                                     @error('password')
                                     <p class="mt-2 text-sm text-red-600" id="password-error">
                                         {{ $message }}
@@ -179,10 +189,12 @@
 
                 <div class="pt-5">
                     <div class="flex justify-end">
-                        <a href="{{ route(str($id)->plural().'.index') }}" type="button"
-                           class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Cancel
-                        </a>
+                        @if(!request()->is('profile'))
+                            <a href="{{ route(str($id)->plural().'.index') }}" type="button"
+                               class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Cancel
+                            </a>
+                        @endif
                         <button type="submit"
                                 class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Save
