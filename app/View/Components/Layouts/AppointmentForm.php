@@ -4,18 +4,17 @@ namespace App\View\Components\Layouts;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class UserTable extends Component
+class AppointmentForm extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $title,
-        public string $description,
-        public string $addButtonText = "",
-        public string $route = "",
+        public string $action,
+        public array  $formData = [],
     )
     {
         //
@@ -26,6 +25,6 @@ class UserTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layouts.user-table');
+        return view('components.layouts.appointment-form');
     }
 }

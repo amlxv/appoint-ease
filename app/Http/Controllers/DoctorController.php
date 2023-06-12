@@ -66,7 +66,10 @@ class DoctorController extends Controller
             'role' => 'doctor',
         ]);
 
-        if (!$result) return redirect()->route('doctors.index')->with('error', 'Something went wrong when creating user.');
+        if (!$result) return redirect()->route('doctors.index')->with([
+            'status' => 'error',
+            'message' => 'Something went wrong when creating user.'
+        ]);
 
         $result = Doctor::query()->where('user_id', $result->id)->update(
             [
@@ -76,9 +79,15 @@ class DoctorController extends Controller
             ]
         );
 
-        if (!$result) return redirect()->route('doctors.index')->with('error', 'Something went wrong when creating user.');
+        if (!$result) return redirect()->route('doctors.index')->with([
+            'status' => 'error',
+            'message' => 'Something went wrong when creating doctor.'
+        ]);
 
-        return redirect()->route('doctors.index')->with('success', 'Doctor created successfully.');
+        return redirect()->route('doctors.index')->with([
+            'status' => 'success',
+            'message' => 'Doctor created successfully.'
+        ]);
     }
 
     /**

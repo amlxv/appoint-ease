@@ -100,9 +100,12 @@
                                     <input type="password" name="password" id="password"
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 @enderror"
                                     >
-                                    <p class="mt-2 text-xs text-gray-600">
-                                        Leave blank if you don't want to change the password.
-                                    </p>
+                                    @if(request()->is('*/edit'))
+                                        <p class="mt-2 text-xs text-gray-600">
+                                            Leave blank if you don't want to change the password.
+                                        </p>
+                                    @endif
+                                    
                                     @error('password')
                                     <p class="mt-2 text-sm text-red-600" id="password-error">
                                         {{ $message }}

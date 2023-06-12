@@ -1,22 +1,17 @@
 <?php
 
-namespace App\View\Components\Layouts;
+namespace App\View\Components\Undraw;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class UserTable extends Component
+class Calendar extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public string $title,
-        public string $description,
-        public string $addButtonText = "",
-        public string $route = "",
-    )
+    public function __construct()
     {
         //
     }
@@ -26,6 +21,6 @@ class UserTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layouts.user-table');
+        return view('components.undraw.calendar');
     }
 }

@@ -1,21 +1,20 @@
 <?php
 
-namespace App\View\Components\Layouts;
+namespace App\View\Components\Patients;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class UserTable extends Component
+class UserForm extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $title,
-        public string $description,
-        public string $addButtonText = "",
-        public string $route = "",
+        public string $action,
+        public ?Model $formData = null,
     )
     {
         //
@@ -26,6 +25,6 @@ class UserTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layouts.user-table');
+        return view('components.patients.user-form');
     }
 }
