@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'patient'
         ]);
 
-        User::factory(10000)->create()->each(function ($user) {
+        User::factory(1000)->create()->each(function ($user) {
             if ($user->role == 'doctor') {
                 $user->doctor()->update(Doctor::factory()->make()->toArray());
             }
