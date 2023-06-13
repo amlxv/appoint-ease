@@ -108,9 +108,11 @@
                         {{ $appointments->links() }}
                     </div>
 
-                    <p class="text-xs text-gray-600 mt-5">
-                        * A medical certificate can be claimed at the clinic if available.
-                    </p>
+                    @if(!$appointments->isEmpty())
+                        <p class="text-xs text-gray-600 mt-5">
+                            * A medical certificate can be claimed at the clinic if available.
+                        </p>
+                    @endif
                 </div>
             </div>
         </div>

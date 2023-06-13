@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'phone_number' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'role' => fake()->randomElement(['patient', 'doctor', 'admin'])
+            'role' => fake()->randomElement(['patient', 'doctor'])
         ];
     }
 
