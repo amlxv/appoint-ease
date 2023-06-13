@@ -72,7 +72,7 @@ class BladeServiceProvider extends ServiceProvider
         /** Patient directive */
         Blade::directive(
             'isPatient',
-            fn() => "<?php if(Auth::user()->isDoctor()): ?>"
+            fn() => "<?php if(Auth::user()->isPatient()): ?>"
         );
 
         Blade::directive(

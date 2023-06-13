@@ -178,7 +178,7 @@
                             </svg>
                             Transactions
                         </a>
-                        @isNotDoctor
+                        @endIsNotDoctor
                     </nav>
                 </div>
             </div>
