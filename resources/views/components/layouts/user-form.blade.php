@@ -36,7 +36,7 @@
         <div class="bg-white rounded-xl p-6 shadow-2xl">
             <form method="POST"
                   action="@if(request()->is('*/create')) {{ route(str($id)->plural().'.store') }} @elseif(request()->is('*/edit')) {{ route(str($id)->plural().'.update', data_get($formData, "id")) }} @elseif(request()->is('profile')) {{ route('profile.update') }} @endif"
-                  class="space-y-8 divide-y divide-gray-200">
+                  class="space-y-8 divide-y divide-gray-200" enctype="multipart/form-data">
                 <div class="space-y-8 divide-y divide-gray-200">
                     <div>
                         @csrf
@@ -56,11 +56,32 @@
                             <div class="sm:col-span-6">
                                 <div class="mt-3 flex flex-col items-center justify-center space-y-6">
                                         <span class="h-32 w-32 overflow-hidden rounded-full bg-gray-100">
-                                            <svg class="h-full w-full text-gray-300" fill="currentColor"
-                                                 viewBox="0 0 24 24">
-                                                <path
-                                                    d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
-                                            </svg>
+                                            @if(request()->is('profile'))
+                                                @if(auth()->user()->avatar)
+                                                    <img src="{{ asset(auth()->user()->avatar) }}"
+                                                         alt="{{ auth()->user()->name }}"
+                                                         class="h-full w-full object-cover">
+                                                @else
+                                                    <svg class="h-full w-full text-gray-300" fill="currentColor"
+                                                         viewBox="0 0 24 24"> <path
+                                                            d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                                @endif
+                                            @elseif(request()->is('*/edit'))
+                                                @if(data_get($formData, "user.avatar"))
+                                                    <img src="{{ asset(data_get($formData, "user.avatar")) }}"
+                                                         alt="{{ data_get($formData, "name") }}"
+                                                         class="h-full w-full object-cover">
+                                                @else
+                                                    <svg class="h-full w-full text-gray-300" fill="currentColor"
+                                                         viewBox="0 0 24 24"> <path
+                                                            d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                                @endif
+                                            @else
+                                                <svg class="h-full w-full text-gray-300" fill="currentColor"
+                                                     viewBox="0 0 24 24"> <path
+                                                        d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+
+                                            @endif
                                         </span>
                                     <label for="avatar"
                                            class="rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer">
@@ -68,6 +89,11 @@
                                         <input id="avatar" name="avatar" type="file" class="sr-only"
                                                value="{{ old('avatar') }}">
                                     </label>
+                                    @error('avatar')
+                                    <p class="mt-2 text-sm text-red-600" id="avatar-error">
+                                        {{ $message }}
+                                    </p>
+                                    @enderror
                                 </div>
                             </div>
 

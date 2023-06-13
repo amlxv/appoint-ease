@@ -222,9 +222,9 @@
                                         class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow"
                                         id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="sr-only">Open user menu</span>
-                                    @if(auth()->user()->profile_photo_path)
+                                    @if(auth()->user()->avatar)
                                         <img class="h-8 w-8 rounded-full"
-                                             src="{{ asset("storage/" . auth()->user()->profile_photo_path) }}"
+                                             src="{{ asset(auth()->user()->avatar) }}"
                                              alt="{{ auth()->user()->name }}">
                                     @else
                                         <svg class="h-8 w-8 text-gray-300 rounded-full" fill="currentColor"

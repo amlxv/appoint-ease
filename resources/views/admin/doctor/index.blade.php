@@ -49,9 +49,9 @@
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                         <div class="flex items-center">
                                             <div class="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full">
-                                                @if($user->profile_photo_path)
+                                                @if($user->avatar)
                                                     <img class="h-10 w-10 rounded-full"
-                                                         src="{{ asset('storage/'.$user->profile_photo_path) }}"
+                                                         src="{{ asset($user->avatar) }}"
                                                          alt="{{ $user->name }}">
                                                 @else
                                                     <svg class="h-full w-full text-gray-300" fill="currentColor"

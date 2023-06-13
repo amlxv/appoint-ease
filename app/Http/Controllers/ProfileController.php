@@ -43,6 +43,7 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $shouldValidate = [
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'name' => 'required|string|max:255|min:3',
             'email' => 'required|email',
             'password' => 'nullable|string|min:8|confirmed',
@@ -70,6 +71,10 @@ class ProfileController extends Controller
 
             if ($request->get('password')) {
                 $data['password'] = Hash::make($request->get('password'));
+            }
+
+            if ($request->file('avatar')) {
+                $data['avatar'] = $request->file('avatar')->store('avatars');
             }
 
             $result = $user->update($data);
@@ -119,6 +124,10 @@ class ProfileController extends Controller
 
             if ($request->get('password')) {
                 $data['password'] = Hash::make($request->get('password'));
+            }
+
+            if ($request->file('avatar')) {
+                $data['avatar'] = $request->file('avatar')->store('avatars');
             }
 
             $result = $user->update($data);

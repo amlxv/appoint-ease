@@ -61,6 +61,7 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'name' => 'required|string|max:255|min:3',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -72,14 +73,20 @@ class PatientController extends Controller
             'gender' => 'nullable|in:male,female',
         ]);
 
-        $result = User::query()->create([
+        $data = [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'phone_number' => $request->get('phone_number'),
             'address' => $request->get('address'),
             'role' => 'patient',
-        ]);
+        ];
+
+        if ($request->file('avatar')) {
+            $data['avatar'] = $request->file('avatar')->store('avatars');
+        }
+
+        $result = User::query()->create($data);
 
         if (!$result) return redirect()->route('patients.index')->with([
             'status' => 'error',
@@ -128,6 +135,7 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $request->validate([
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'name' => 'required|string|max:255|min:3',
             'email' => 'required|email',
             'password' => 'nullable|string|min:8|confirmed',
@@ -148,6 +156,10 @@ class PatientController extends Controller
 
         if ($request->get('password')) {
             $data['password'] = Hash::make($request->get('password'));
+        }
+
+        if ($request->file('avatar')) {
+            $data['avatar'] = $request->file('avatar')->store('avatars');
         }
 
         $result = $patient->user()->update($data);

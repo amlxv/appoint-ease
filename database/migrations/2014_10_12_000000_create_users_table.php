@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('profile_photo_path')->nullable();
+            $table->string('avatar')->nullable();
             $table->enum('role', array('admin', 'doctor', 'patient'))->default('patient');
             $table->rememberToken();
             $table->timestamps();
