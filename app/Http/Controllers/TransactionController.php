@@ -166,11 +166,25 @@ class TransactionController extends Controller
 
     public function index()
     {
-        if (!auth()->user()->hasRequiredData()) {
+        $user = auth()->user();
+
+        if ($user->isDoctor()) {
+            return redirect()->route('dashboard')->with([
+                'status' => 'error',
+                'message' => 'You are not allowed to access this page.'
+            ]);
+        }
+
+        if (!$user->hasRequiredData()) {
             return redirect()->route('profile.index')->with([
                 'status' => 'error',
                 'message' => 'Your account is being limited. Please complete your profile to continue.'
             ]);
+        }
+
+        if ($user->isAdmin()) {
+            $transactions = Transaction::query()->latest()->simplePaginate(10);
+            return view('admin.transactions.index', compact('transactions'));
         }
 
         $transactions = Transaction::query()->where('patient_id', Auth::user()->patient->id)->simplePaginate(10);

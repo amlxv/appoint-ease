@@ -1,8 +1,8 @@
 @extends('layouts.template')
 
 @section('x-content')
-    <x-layouts.user-table title="Appointments" description="All of your upcoming, ongoing, and past appointments."
-                          add-button-text="New Appointment" :route="route('appointments.create')">
+    <x-layouts.user-table title="Appointments"
+                          description="All of upcoming, ongoing, and past that related appointments to you.">
 
         <div class="flex flex-col">
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -38,7 +38,7 @@
                                     </th>
                                     <th scope="col"
                                         class="py-3.5 text-left text-sm font-semibold text-gray-900 px-3">
-                                        Doctor
+                                        Patient
                                     </th>
                                     <th scope="col"
                                         class="py-3.5 text-left text-sm font-semibold text-gray-900 px-3">
@@ -47,6 +47,10 @@
                                     <th scope="col"
                                         class="py-3.5 text-left text-sm font-semibold text-gray-900 px-3">
                                         Status
+                                    </th>
+                                    <th scope="col"
+                                        class="py-3.5 text-left text-sm font-semibold text-gray-900 px-3">
+                                        Action
                                     </th>
 
                                 </tr>
@@ -78,7 +82,7 @@
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             <div class="text-gray-500">
-                                                {{ $appointment->doctor->user->name }}
+                                                {{ $appointment->patient->user->name }}
                                             </div>
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -95,6 +99,12 @@
 
                                             </div>
                                         </td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            <div class="text-gray-500">
+                                                <a href="{{ route('appointments.edit', $appointment->id) }}"
+                                                   class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            </div>
+                                        </td>
 
                                     </tr>
                                 @endforeach
@@ -107,10 +117,6 @@
                     <div class="mt-5">
                         {{ $appointments->links() }}
                     </div>
-
-                    <p class="text-xs text-gray-600 mt-5">
-                        * A medical certificate can be claimed at the clinic if available.
-                    </p>
                 </div>
             </div>
         </div>

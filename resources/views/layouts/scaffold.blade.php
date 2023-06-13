@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Simplify Booking: AppointEase</title>
-    <link rel="shortcut icon" href="images/logo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/logo.svg') }}" type="image/x-icon">
 
     <link rel="stylesheet" href="{{ asset('fonts/inter/inter.css') }}">
 
@@ -19,9 +19,13 @@
 </head>
 
 <body class="h-full">
-    @yield('content')
 
-    @livewireScripts
+@yield('content')
+
+@livewireScripts
+
 </body>
+
+@stack('scripts')
 
 </html>

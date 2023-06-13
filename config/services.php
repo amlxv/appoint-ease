@@ -38,7 +38,7 @@ return [
         'bill_description' => 'A booking fee for AppointEase',
         'bill_price_setting' => 1,
         'bill_payor_info' => 1,
-        'bill_amount' => 5000,
+        'bill_amount' => 15000,
         'bill_payment_channel' => '0',
         'bill_content_email' => 'Thank you for using our system for appointment!',
     ],
