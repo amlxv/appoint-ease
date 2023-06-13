@@ -219,11 +219,20 @@
                         <div class="relative ml-3" x-data="{ show: false }">
                             <div>
                                 <button type="button" @click="show = !show"
-                                        class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow"
                                         id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="sr-only">Open user menu</span>
-                                    <img class="h-8 w-8 rounded-full"
-                                         src="https://avatars.githubusercontent.com/u/34534953?v=4" alt="">
+                                    @if(auth()->user()->profile_photo_path)
+                                        <img class="h-8 w-8 rounded-full"
+                                             src="{{ asset("storage/" . auth()->user()->profile_photo_path) }}"
+                                             alt="{{ auth()->user()->name }}">
+                                    @else
+                                        <svg class="h-8 w-8 text-gray-300 rounded-full" fill="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path
+                                                d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                        </svg>
+                                    @endif
                                 </button>
                             </div>
 
