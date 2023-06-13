@@ -7,6 +7,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -19,7 +20,7 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
@@ -31,6 +32,20 @@ class AppointmentController extends Controller
         }
 
         if ($user->isPatient()) {
+
+            if ($request->get('search')) {
+                $appointments = Appointment::query()
+                    ->where('patient_id', $user->patient->id)
+                    ->where(fn(Builder $query) => $query
+                        ->where('id', 'like', '%' . $request->get('search') . '%')
+                        ->orWhere('case', 'like', '%' . $request->get('search') . '%'))
+                    ->latest()
+                    ->simplePaginate(10)
+                    ->withQueryString();
+
+                return view('patient.appointment.index', ['appointments' => $appointments]);
+            }
+
             $appointments = Appointment::query()
                 ->where('patient_id', $user->patient->id)
                 ->orderBy('id', 'desc')
@@ -41,6 +56,20 @@ class AppointmentController extends Controller
         }
 
         if ($user->isDoctor()) {
+
+            if ($request->get('search')) {
+                $appointments = Appointment::query()
+                    ->where('doctor_id', $user->doctor->id)
+                    ->where(fn(Builder $query) => $query
+                        ->where('id', 'like', '%' . $request->get('search') . '%')
+                        ->orWhere('case', 'like', '%' . $request->get('search') . '%'))
+                    ->latest()
+                    ->simplePaginate(10)
+                    ->withQueryString();
+
+                return view('doctor.appointment.index', ['appointments' => $appointments]);
+            }
+
             $appointments = Appointment::query()
                 ->where('doctor_id', $user->doctor->id)
                 ->orderBy('id', 'desc')
@@ -51,6 +80,18 @@ class AppointmentController extends Controller
         }
 
         if ($user->isAdmin()) {
+
+            if ($request->get('search')) {
+                $appointments = Appointment::query()
+                    ->where('id', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('case', 'like', '%' . $request->get('search') . '%')
+                    ->latest()
+                    ->simplePaginate(10)
+                    ->withQueryString();
+
+                return view('admin.appointment.index', ['appointments' => $appointments]);
+            }
+
             $appointments = Appointment::query()
                 ->latest()
                 ->simplePaginate(10);

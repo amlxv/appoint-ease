@@ -22,7 +22,6 @@ class BladeServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /** Admin directive */
-
         Blade::directive(
             'isAdmin',
             fn() => "<?php if(Auth::user()->isAdmin()): ?>"
@@ -32,11 +31,21 @@ class BladeServiceProvider extends ServiceProvider
             'endIsAdmin',
             fn() => "<?php endif; ?>"
         );
-
         /** end: Admin directive */
 
-        /** Doctor directive */
+        /** Not Admin directive */
+        Blade::directive(
+            'isNotAdmin',
+            fn() => "<?php if(!Auth::user()->isAdmin()): ?>"
+        );
 
+        Blade::directive(
+            'endIsNotAdmin',
+            fn() => "<?php endif; ?>"
+        );
+        /** end: Not Admin directive */
+
+        /** Doctor directive */
         Blade::directive(
             'isDoctor',
             fn() => "<?php if(Auth::user()->isDoctor()): ?>"
@@ -46,11 +55,21 @@ class BladeServiceProvider extends ServiceProvider
             'endIsDoctor',
             fn() => "<?php endif; ?>"
         );
-
         /** end: Doctor directive */
 
-        /** Patient directive */
+        /** Not Doctor directive */
+        Blade::directive(
+            'isNotDoctor',
+            fn() => "<?php if(!Auth::user()->isDoctor()): ?>"
+        );
 
+        Blade::directive(
+            'endIsNotDoctor',
+            fn() => "<?php endif; ?>"
+        );
+        /** end: Not Doctor directive */
+
+        /** Patient directive */
         Blade::directive(
             'isPatient',
             fn() => "<?php if(Auth::user()->isDoctor()): ?>"
@@ -60,7 +79,18 @@ class BladeServiceProvider extends ServiceProvider
             'endIsPatient',
             fn() => "<?php endif; ?>"
         );
-
         /** end: Patient directive */
+
+        /** Not Patient directive */
+        Blade::directive(
+            'isNotPatient',
+            fn() => "<?php if(!Auth::user()->isPatient()): ?>"
+        );
+
+        Blade::directive(
+            'endIsNotPatient',
+            fn() => "<?php endif; ?>"
+        );
+        /** end: Not Patient directive */
     }
 }

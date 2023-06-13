@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -164,7 +164,7 @@ class TransactionController extends Controller
         return $result;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
@@ -183,11 +183,36 @@ class TransactionController extends Controller
         }
 
         if ($user->isAdmin()) {
+
+            if ($request->get('search')) {
+                $transactions = Transaction::query()
+                    ->where('payment_id', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('toyyibpay_id', 'like', '%' . $request->get('search') . '%')
+                    ->latest()
+                    ->simplePaginate(10)
+                    ->withQueryString();
+
+                return view('admin.transactions.index', ['transactions' => $transactions]);
+            }
+
             $transactions = Transaction::query()->latest()->simplePaginate(10);
             return view('admin.transactions.index', compact('transactions'));
         }
 
-        $transactions = Transaction::query()->where('patient_id', Auth::user()->patient->id)->simplePaginate(10);
+        if ($request->get('search')) {
+            $transactions = Transaction::query()
+                ->where('patient_id', $user->patient->id)
+                ->where(fn(Builder $query) => $query
+                    ->where('payment_id', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('toyyibpay_id', 'like', '%' . $request->get('search') . '%'))
+                ->latest()
+                ->simplePaginate(10)
+                ->withQueryString();
+
+            return view('patient.transactions.index', ['transactions' => $transactions]);
+        }
+
+        $transactions = Transaction::query()->where('patient_id', $user->patient->id)->simplePaginate(10);
         return view('patient.transactions.index', compact('transactions'));
     }
 }

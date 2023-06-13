@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,10 +22,24 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!auth()->user()->isAdmin()) {
             abort(403);
+        }
+
+        if ($request->get('search')) {
+            $users = User::query()
+                ->where('role', 'patient')
+                ->where(fn(Builder $query) => $query
+                    ->where('name', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('email', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('phone_number', 'like', '%' . $request->get('search') . '%'))
+                ->latest()
+                ->simplePaginate(10)
+                ->withQueryString();
+
+            return view('admin.patient.index', ['users' => $users]);
         }
 
         $users = User::query()->where('role', 'patient')->latest()->simplePaginate(10);
