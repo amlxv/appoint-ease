@@ -119,7 +119,6 @@ class AppointmentController extends Controller
         }
 
         $doctors = Appointment::query()
-            ->where('date',)
             ->where('status', '!=', 'completed')
             ->pluck('doctor_id');
 
