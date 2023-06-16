@@ -119,7 +119,7 @@ class AppointmentController extends Controller
         }
 
         $doctors = Appointment::query()
-            ->where('status', '!=', 'completed')
+            ->where('status', '=', 'pending')
             ->pluck('doctor_id');
 
         $doctors = Doctor::query()->whereNotIn('id', $doctors)->get();
