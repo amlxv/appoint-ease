@@ -65,7 +65,7 @@
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             <div class="text-gray-500">
-                                                {{ $transaction->toyyibpay_id ?? '-' }}
+                                                {{ $transaction->toyyibpay_id ?? 'N/A' }}
                                             </div>
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
