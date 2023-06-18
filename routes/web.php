@@ -23,19 +23,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-/**
- * Guest Page & Dashboard
- *
- */
-//Route::get('/', fn() => Auth::check()
-//    ? view('dashboard',
-//        [
-//            'doctor' => Doctor::all()->count(),
-//            'patient' => Patient::all()->count()
-//        ])
-//    : view('layouts.guest'))
-//    ->name('dashboard');
-
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('doctors', DoctorController::class);
