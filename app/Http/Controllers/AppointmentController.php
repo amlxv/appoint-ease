@@ -122,7 +122,10 @@ class AppointmentController extends Controller
             ->where('status', '=', 'pending')
             ->pluck('doctor_id');
 
-        $doctors = Doctor::query()->whereNotIn('id', $doctors)->get();
+        $doctors = Doctor::query()
+            ->whereNotIn('id', $doctors)
+            ->where('status', '=', 'active')
+            ->get();
 
         $formData = [
             'doctors' => $doctors
