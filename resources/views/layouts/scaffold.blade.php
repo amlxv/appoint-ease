@@ -14,15 +14,11 @@
     @vite('resources/js/alpinejs@3.12.1.js')
 
     @stack('head')
-
-    @livewireStyles
 </head>
 
 <body class="h-full">
 
 @yield('content')
-
-@livewireScripts
 
 </body>
 
